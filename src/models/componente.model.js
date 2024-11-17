@@ -1,11 +1,16 @@
 const mongoose = require('mongoose');
+const { Schema } = require('mongoose');
 
 const componenteSchema = new mongoose.Schema({
   nombre: {
-    type: String,
+    type: Schema.Types.String,
     required: true
   },
-  descripcion: String
+  descripcion: Schema.Types.String,
+  productosId: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Producto'
+  }]
 });
 
 module.exports = mongoose.model('Componente', componenteSchema);
