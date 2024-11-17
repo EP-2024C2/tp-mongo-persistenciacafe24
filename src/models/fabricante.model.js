@@ -1,19 +1,24 @@
 const mongoose = require('mongoose');
+const { Schema } = require('mongoose');
 
 const fabricanteSchema = new mongoose.Schema({
   nombre: {
-    type: String,
-    required: true
+    type: Schema.Types.String,
+    required: true,
   },
   direccion: {
-    type: String,
-    required: true
+    type: Schema.Types.String,
+    required: true,
   },
   numeroContacto: {
-    type: String,
-    required: true
+    type: Schema.Types.String,
+    required: true,
   },
-  pathImgPerfil: String
+  pathImgPerfil: Schema.Types.String,
+  productosId: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Producto'
+  }]
 });
 
 module.exports = mongoose.model('Fabricante', fabricanteSchema);
