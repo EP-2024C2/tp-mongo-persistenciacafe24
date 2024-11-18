@@ -21,9 +21,11 @@ const fabricanteSchema = new mongoose.Schema({
   }]
 });
 
-fabricanteSchema.methods.toJSON = function() { // esto para no mostrar el atributo __v en las queries
+fabricanteSchema.methods.toJSON = function() {
   const fabricanteObject = this.toObject();
   delete fabricanteObject.__v;
+  fabricanteObject.productos = fabricanteObject.productosId;
+  delete fabricanteObject.productosId
   return fabricanteObject;
 }
 

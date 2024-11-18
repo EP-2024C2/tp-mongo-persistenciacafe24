@@ -9,8 +9,6 @@ route.get('/:id', getFabricanteById);
 route.post('/', createFabricante);
 route.put('/:id', updateFabricante);
 route.delete('/:id', deleteFabricante);
-//id de autor y fabricante que queremos generar
-route.post('/:id/fabricantes',asociarFabricante)
-route.get('/fabricantes/:id',getProductoDeFabricante)
+route.get('/:id/productos',getProductoDeFabricante);
 
 module.exports = route;

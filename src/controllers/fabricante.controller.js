@@ -40,13 +40,13 @@ const createFabricante = async (req , res ) => {
     }
 }
 const updateFabricante = async (req, res) => {
-    const { id } = req.params;
+    const { id: _id } = req.params;
     const { nombre, direccion, numeroContacto, pathImgPerfil } = req.body;
-    if (!nombre || !direccion) {
-      return res.status(401).json({ message: 'Los campos nombre y precio son obligatorios.' });
+    if (!nombre || !direccion || !numeroContacto) {
+      return res.status(401).json({ message: 'Los campos nombre, direccion y numeroContacto son obligatorios.' });
     }
     try {
-      const fabricanteActualizado = await Fabricante.updateOne({ id }, {
+      const fabricanteActualizado = await Fabricante.updateOne({ _id }, {
         nombre,
         direccion,
         numeroContacto,
@@ -59,9 +59,9 @@ const updateFabricante = async (req, res) => {
   };
 
   const deleteFabricante = async (req, res) => {
-    const { id } = req.params;
+    const { id: _id } = req.params;
     try {
-      const fabricanteEliminado = await Fabricante.deleteOne({ id });
+      const fabricanteEliminado = await Fabricante.deleteOne({ _id });
       res.status(200).json({ message: 'Fabricante eliminado con éxito.', fabricanteEliminado });
     } catch (error) {
       res.status(404).json({ message: `Error al eliminar el fabricante. ${error.message}` });
@@ -85,7 +85,10 @@ const updateFabricante = async (req, res) => {
 const getProductoDeFabricante = async (req, res) =>{
   const _id = req.params.id;
   try {
-    const fabricante = await Fabricante.find({_id}).populate('productosId');
+    const fabricante = await Fabricante.find({_id}).populate({
+      path: 'productosId',
+      select: '-__v -fabricantesId'
+    });
     res.status(200).json(fabricante)
     
   } catch (error) {
@@ -93,11 +96,6 @@ const getProductoDeFabricante = async (req, res) =>{
   }
   
 }
-
-
-
-
-
 
 module.exports = {
     getAllFabricantes,
