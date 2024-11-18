@@ -93,3 +93,4 @@ const getProductosFromComponente = async (req, res) => {
     deleteComponente,
     getProductosFromComponente,
 }
+/*prueba*/
