@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 // Obtener todos los productos
 const getAllProductos = async (req, res) => {
   try {
-    const productos = await Producto.find() //.select('-__v');
+    const productos = await Producto.find().select('-fabricantesId -componentes');
     res.status(200).json(productos);
   } catch (error) {
     res.status(404).json({ message: `No se encontró la página solicitada. ${error.message}` });
@@ -17,7 +17,7 @@ const getAllProductos = async (req, res) => {
 const getProductoById = async (req, res) => {
   const { id } = req.params;
   try {
-    const producto = await Producto.findById(id) //.select('-__v');
+    const producto = await Producto.findById(id).select('-fabricantesId -componentes');
     res.status(200).json(producto);
   } catch (error) {
     res.status(404).json({ message: `No se encontró la página solicitada. ${error.message}` });
@@ -51,7 +51,7 @@ const updateProducto = async (req, res) => {
     const productoActualizado = await Producto.findByIdAndUpdate({ _id }, {
       ...req.body
     }, { new: true });
-    res.status(200).json(productoActualizado);
+    res.status(200).json({ message: 'El producto se modificó con éxito.', productoActualizado });
   } catch (error) {
     res.status(404).json({ message: `Error en la modificación del producto. ${error.message}` });
   }
@@ -62,9 +62,9 @@ const deleteProducto = async (req, res) => {
   const { id: _id } = req.params;
   try {
     const productoEliminado = await Producto.findByIdAndDelete({ _id });
-    res.status(200).json({ message: 'Producto eliminado con éxito.', productoEliminado });
+    res.status(200).json({ message: 'El producto se eliminó con éxito.', productoEliminado });
   } catch (error) {
-    res.status(404).json({ message: `Error al eliminar el producto. ${error.message}` });
+    res.status(404).json({ message: `Error al intentar eliminar el producto. ${error.message}` });
   }
 };
 
@@ -78,10 +78,10 @@ const asociarFabricantes = async (req, res) => {
       const unFabricante = await Fabricante.findOne({ nombre: fabricantes[i] });
       fabrEncontrados.push(unFabricante._id);
     }
-    const productoActualizado = await Producto.updateOne({ _id }, {
+    const producto = await Producto.updateOne({ _id }, {
       fabricantesId: fabrEncontrados
     });
-    res.status(201).json(productoActualizado);
+    res.status(201).json({ message: 'El proceso de asosiación fue éxitoso.', producto });
   } catch (error) {
     res.status(404).json({ message: `No se encontró el recurso solicitado. ${error.message}` });
   }
@@ -111,11 +111,10 @@ const asociarComponentes = async (req, res) => {
       const unComponente = await Componente.findOne({ nombre: componentes[i] });
       componentesEncontrados.push(unComponente);
     }
-    console.log(componentesEncontrados);
-    const productoActualizado = await Producto.updateOne({ _id }, {
+    const producto = await Producto.updateOne({ _id }, {
       componentes: componentesEncontrados
     });
-    res.status(201).json(productoActualizado);
+    res.status(201).json({ message: 'El proceso de asosiación fue éxitoso.', producto });
   } catch (error) {
     res.status(404).json({ message: `No se encontró el recurso solicitado. ${error.message}` });
   }
