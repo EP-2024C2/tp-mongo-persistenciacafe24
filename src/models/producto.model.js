@@ -18,7 +18,7 @@ const productoSchema = new mongoose.Schema({
     type: Schema.Types.String
   },
   precio: {
-    type: mongoose.Types.Decimal128, // revisar si corresponde el tipo Decimal128
+    type: Schema.Types.Number,
     required: true
   },
   pathImg: Schema.Types.String,
