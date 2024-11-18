@@ -71,7 +71,7 @@ const updateFabricante = async (req, res) => {
   const asociarFabricante = async ( req , res ) =>{
     const id = req.params.id;
     try {
-     const nuevoFabricante ={...req.body, productoId: new mongoose.Types.ObjectId(id)}
+     const nuevoFabricante ={...req.body, productosId: new mongoose.Types.ObjectId(id)}
      const fabricante = await Fabricante.create(nuevoFabricante);
 
       res.status(201).json(fabricante)
@@ -85,7 +85,7 @@ const updateFabricante = async (req, res) => {
 const getProductoDeFabricante = async (req, res) =>{
   const _id = req.params.id;
   try {
-    const fabricante = await Fabricante.find({_id}).populate('productoId');
+    const fabricante = await Fabricante.find({_id}).populate('productosId');
     res.status(200).json(fabricante)
     
   } catch (error) {
