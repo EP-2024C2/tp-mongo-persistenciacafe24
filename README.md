@@ -57,7 +57,9 @@ https://localhost:3000
 # Tipo de enfoque
 
 Cuando desarrollamos el proyecto decidimos con el grupo que ibamos a tomar el enfoque de las Relaciones Referenciadas.
-Esto fue porque se nos iba a facilitar a la hora de hacer tanto los endpoints y cuando teníamos que modelar los Schemas
+Esto fue porque se nos iba a facilitar a la hora de hacer tanto los endpoints y cuando teníamos que modelar los Schemas.
+
+Sin embargo, para los productos y componentes elegimos la relación por incrustación, ya que un producto real puede contener N componentes dentro de él. Es decir, tomamos esta decisión para reflejar lo que ocurre en la vida real.
 
 
 ----
